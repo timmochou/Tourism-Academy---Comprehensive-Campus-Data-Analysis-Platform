@@ -1,0 +1,15 @@
+WITH t0 AS 
+(
+SELECT 
+	login_id, 
+	teacher_id, 
+	faculty_id
+FROM dbo.dw_fac_faculty_d
+WHERE 1=1
+${if(len(P_FAC)=0, "","AND faculty_id ='"+P_FAC+"'")}
+)
+
+SELECT * FROM dbo.dw_api_publication_type_d ta 
+INNER JOIN t0 ON ta.teacher_id=t0.login_id
+WHERE 1=1 
+--AND authorship_type LIKE '%First author%'
